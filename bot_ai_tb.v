@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module tb_bot_ai;
+module bot_ai_tb;
 
     // 1. Declare signals to connect to the Bot AI module
     // Module inputs are declared as regs (so the testbench can drive them)
