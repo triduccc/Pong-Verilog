@@ -16,6 +16,7 @@ module ball_logic(
     parameter BALL_SIZE = 8;      
 
     // Game variables
+    reg hit_p1, hit_p2;
     reg signed [9:0] ball_dx; 
     reg signed [9:0] ball_dy; 
 

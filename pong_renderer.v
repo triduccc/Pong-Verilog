@@ -1,6 +1,6 @@
 module pong_renderer (
-    input wire [9:0] pixel_x,   
-    input wire [9:0] pixel_y,   
+    input wire [10:0] pixel_x,   
+    input wire [10:0] pixel_y,   
     input wire video_on,        
     input wire [9:0] paddle1_y, 
     input wire [9:0] paddle2_y, 

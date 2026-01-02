@@ -68,7 +68,7 @@ module vga_sync_gen (
     end
 
     assign h_sync = h_sync_reg;
-    assign v_sync = v_count_reg;
+    assign v_sync = v_sync_reg;
     assign pixel_x = pixel_x_reg;
     assign pixel_y = pixel_y_reg;
     assign video_on = video_on_reg;

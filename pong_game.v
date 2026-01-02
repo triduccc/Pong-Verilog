@@ -6,8 +6,8 @@ module pong_game (
     output wire [11:0] rgb // VGA Color Output (4 bits R, G, B)
 );
 
-    wire [9:0] w_pixel_x;
-    wire [9:0] w_pixel_y;
+    wire [10:0] w_pixel_x;
+    wire [10:0] w_pixel_y;
     wire w_video_on;
 
     // Game Object Positions

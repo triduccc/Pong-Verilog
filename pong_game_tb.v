@@ -2,45 +2,48 @@
 
 module pong_game_tb;
 
-    initial begin
-        $dumpfile("pong_waveform.vcd");
-        $dumpvars(0, pong_game_tb);
-
-        clk = 0;
-        rst = 1;
-    // Inputs
+    // 1. Khai báo các tín hiệu kết nối
     reg clk;
     reg rst;
-
-    // Outputs
     wire h_sync;
     wire v_sync;
     wire [11:0] rgb;
 
-    top_level uut (
-        .clk(clk), 
-        .rst(rst), 
-        .h_sync(h_sync), 
-        .v_sync(v_sync), 
+    // 2. Gọi module tổng hợp (UUT - Unit Under Test)
+    pong_game uut (
+        .clk(clk),
+        .rst(rst),
+        .h_sync(h_sync),
+        .v_sync(v_sync),
         .rgb(rgb)
     );
 
-    always #20 clk = ~clk;
+    localparam real CLK_PERIOD_NS = 40.0;
+    localparam integer SIM_TIME_NS = 10_000_000;
 
+    // 3. Tạo xung nhịp (Clock) ~25MHz (chu kỳ 40ns)
     initial begin
         clk = 0;
+        forever #(CLK_PERIOD_NS/2.0) clk = ~clk; 
+    end
+
+    // 4. Kịch bản mô phỏng
+    initial begin
+        // Khởi tạo file dump để xem Waveform trên EPWave
+        $dumpfile("pong_game.vcd");
+        $dumpvars(0, pong_game_tb);
+
+        // Reset hệ thống 
         rst = 1;
-
-        $display("--- Starting Full System Simulation ---");
-        
-        #100;
+        repeat (5) @(posedge clk);
         rst = 0;
-        $display("Reset Released.");
 
-        #65000;
-        
-        $display("--- Simulation Completed ---");
+        // Cho game chạy một khoảng thời gian đủ dài để thấy bóng di chuyển
+        // 10ms mô phỏng (tương đương 10,000,000 ns)
+        #(SIM_TIME_NS); 
+
+        $display("Simulation Finished");
         $finish;
     end
-    
+
 endmodule
