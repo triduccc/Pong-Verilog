@@ -34,15 +34,17 @@ module terminal_display (
 
     task display();
         integer i, j;
-        reg [WIDTH-1:0] row; // each row is a vector
+        reg [1:0] row [0:WIDTH-1];  // each row is a vector
         begin
-            $display("\033[2J\033[H"); //clear screen, move cursor to top left corner
             $display("P1 Score: %d P2 Score: %d", score_p1, score_p2);
             $display("");
 
             //print each row
             for (i = 0; i < HEIGHT; i = i + 1) begin
-                row = 0;
+                // reset each row to 0
+                for (j = 0; j < WIDTH; j = j + 1) begin
+                    row[j] = 0;
+                end
 
                 // check for paddles
                 if (i >= (paddle1_y / SCALE_Y) && i < ((paddle1_y + 40) / SCALE_Y)) begin
@@ -53,7 +55,7 @@ module terminal_display (
 
                 if (i >= (paddle2_y / SCALE_Y) && i < ((paddle2_y + 40) / SCALE_Y)) begin
                     for (j = 0; j < PADDLE_WIDTH; j = j +1) begin
-                        row[j] = 1;
+                        row[WIDTH-1-j] = 1;
                     end
                 end
 
@@ -63,15 +65,19 @@ module terminal_display (
                 end
 
                 //print on the terminal
-                for (j = 0; j < WIDTH; j = j +1) begin
+                for (j = 0; j < WIDTH; j = j + 1) begin
                     if (row[j] == 2) $write("O");
                     else if (row[j] == 1) $write("|");
                     else $write(".");
                 end
                 $display("");
+
             end
+
+            //move cursor up to overwrite
+            $write("\033[%dA", HEIGHT + 2);
         end
     endtask
 endmodule
 
-
+// iverilog -o pong_game.vvp pong_game_tb.v pong_game.v ball_logic.v paddle_logic.v bot_ai.v pong_renderer.v vga_sync_gen.v terminal_display.v
