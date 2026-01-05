@@ -7,8 +7,8 @@ module bot_ai(
     output reg move_down
 );
 
-    parameter PADDLE_HEIGHT = 40;
-    parameter DEADZONE = 3; // avoid the paddle moving up and down continuously
+    parameter PADDLE_HEIGHT = 4;
+    parameter DEADZONE = 0; // avoid the paddle moving up and down continuously
 
     reg [9:0] paddle_center;
     

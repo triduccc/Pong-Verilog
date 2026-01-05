@@ -10,12 +10,12 @@ module paddle_logic (
 );
 
     // Parameters
-    parameter Y_MAX = 479;          
-    parameter PADDLE_HEIGHT = 40;   
-    parameter PADDLE_VELOCITY = 10;  
+    parameter Y_MAX = 24;          
+    parameter PADDLE_HEIGHT = 4;   
+    parameter PADDLE_VELOCITY = 2;  
 
     // Center
-    localparam CENTER_POS = 220;
+    localparam CENTER_POS = 10;
 
     //Paddle 1
     always @(posedge clk) begin

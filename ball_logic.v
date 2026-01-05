@@ -3,18 +3,18 @@ module ball_logic(
     input rst,
     input [9:0] paddle1_y, 
     input [9:0] paddle2_y, 
-    output reg [9:0] ball_x,
-    output reg [9:0] ball_y,
+    output reg signed [9:0] ball_x,
+    output reg signed [9:0] ball_y,
     output reg [3:0] score_p1,
     output reg [3:0] score_p2
 );
 
     // Parameters
-    parameter X_MAX = 639;
-    parameter Y_MAX = 479;
-    parameter PADDLE_HEIGHT = 40; 
-    parameter PADDLE_WIDTH = 10; 
-    parameter BALL_SIZE = 8;      
+    parameter X_MAX = 80;
+    parameter Y_MAX = 24;
+    parameter PADDLE_HEIGHT = 4; 
+    parameter PADDLE_WIDTH = 1; 
+    parameter BALL_SIZE = 1;      
 
     // Game variables
     reg signed [9:0] ball_dx; 
@@ -84,7 +84,6 @@ module ball_logic(
                 ball_y = Y_MAX / 2;
                 ball_dx = 1;  // Or -ball_dx to reverse, or randomize
                 ball_dy = 1; 
-                $display("*** LEFT SCORES! ***  Left: %0d  Right: %0d", score_p1, score_p2);
             end
             if (ball_x > X_MAX - PADDLE_WIDTH) begin
                 score_p2 = score_p2 + 1;
@@ -92,7 +91,6 @@ module ball_logic(
                 ball_y = Y_MAX / 2;
                 ball_dx = -1;  // Reverse direction
                 ball_dy = 1;
-                $display("*** RIGHT SCORES! ***  Left: %0d  Right: %0d", score_p1, score_p2);
             end
 
 
