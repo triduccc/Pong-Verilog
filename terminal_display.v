@@ -12,7 +12,7 @@ module terminal_display (
 );
 
     //parameters, we reduce the screen to just 80x24
-    parameter PADDLE_HEIGHT = 4;
+    parameter PADDLE_HEIGHT = 5;
     parameter WIDTH = 80;
     parameter HEIGHT = 24;
     parameter UPDATE_INTERVAL = 1_000;

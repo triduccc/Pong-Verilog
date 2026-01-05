@@ -74,23 +74,16 @@ module pong_game (
     );
 
     // Bot 1 
-    bot_ai bot1 (
+    bot_ai bot (
         .clk(clk),
         .rst(rst),
-        .paddle_y(w_paddle1_y), // Watch own paddle
+        .paddle1_y(w_paddle1_y), // Watch own paddle
+        .paddle2_y(w_paddle2_y), // Watch own paddle
         .ball_y(w_ball_y),      // Watch ball
-        .move_up(w_p1_up),      // Output command
-        .move_down(w_p1_down)   // Output command
-    );
-
-    // Bot 2 
-    bot_ai bot2 (
-        .clk(clk),
-        .rst(rst),
-        .paddle_y(w_paddle2_y), // Watch own paddle
-        .ball_y(w_ball_y),      // Watch ball
-        .move_up(w_p2_up),      // Output command
-        .move_down(w_p2_down)   // Output command
+        .move_up1(w_p1_up),      // Output command
+        .move_down1(w_p1_down),   // Output command
+        .move_up2(w_p2_up),      // Output command
+        .move_down2(w_p2_down)   // Output command
     );
 
     //Graphics Renderer

@@ -12,7 +12,7 @@ module ball_logic(
     // Parameters
     parameter X_MAX = 80;
     parameter Y_MAX = 24;
-    parameter PADDLE_HEIGHT = 4; 
+    parameter PADDLE_HEIGHT = 5; 
     parameter PADDLE_WIDTH = 1; 
     parameter BALL_SIZE = 1;      
 
