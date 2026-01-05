@@ -39,8 +39,7 @@ module pong_game_tb;
         .score_p2(score_p2)
     );
 
-    localparam real CLK_PERIOD_NS = 40.0;
-    localparam integer SIM_TIME_NS = 10_000_000;
+    localparam real CLK_PERIOD_NS = 1_000_000_000;
 
     initial begin
         clk = 0;
@@ -55,10 +54,7 @@ module pong_game_tb;
         repeat (5) @(posedge clk);
         rst = 0;
 
-        #(SIM_TIME_NS); 
 
-        $display("Simulation Finished");
-        $finish;
     end
 
 endmodule

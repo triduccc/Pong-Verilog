@@ -10,9 +10,9 @@ module pong_renderer (
 );
 
     //Layout
-    parameter PADDLE_W = 10;    
-    parameter PADDLE_H = 40;   
-    parameter BALL_SIZE = 8;    
+    parameter PADDLE_W = 1;    
+    parameter PADDLE_H = 4;   
+    parameter BALL_SIZE = 1;    
     
     // Paddle Pos
     parameter P1_X_L = 30;      

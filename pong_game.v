@@ -1,5 +1,5 @@
 module pong_game (
-    input wire clk,       // System Clock (Expects ~25MHz for 640x480)
+    input wire clk,       // System Clock 
     input wire rst,       // Active High Reset
     output wire h_sync,   // VGA Horizontal Sync
     output wire v_sync,   // VGA Vertical Sync

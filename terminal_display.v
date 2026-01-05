@@ -15,24 +15,19 @@ module terminal_display (
     parameter PADDLE_HEIGHT = 4;
     parameter WIDTH = 80;
     parameter HEIGHT = 24;
-    parameter UPDATE_INTERVAL = 1000;
+    parameter UPDATE_INTERVAL = 1_000;
     localparam PADDLE_CHAR = "#";
     localparam EMPTY = " ";
     localparam BALL_CHAR = "o";
     integer frame = 0;
 
-    reg [31:0] update_counter = 0;
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin
-            update_counter <= 0;
+            frame = 0;
         end else begin
-            update_counter <= update_counter + 1;
-            if (update_counter >= UPDATE_INTERVAL) begin
-                update_counter <= 0;
-                render();
-                frame = frame + 1;
-            end
+            render();
+            frame = frame + 1;
         end
     end
 
