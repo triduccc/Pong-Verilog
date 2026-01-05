@@ -12,9 +12,9 @@ module terminal_display (
 );
 
     //parameters, we reduce the screen to just 80x24
-    localparam PADDLE_H = 6;
-    parameter WIDTH = 80;
-    parameter HEIGHT = 24;
+    parameter PADDLE_HEIGHT = 40;
+    parameter WIDTH = 60;
+    parameter HEIGHT = 48;
     parameter SCALE_X = 640 / WIDTH;
     parameter SCALE_Y = 480 / HEIGHT;
     parameter UPDATE_INTERVAL = 1000;
@@ -52,11 +52,11 @@ module terminal_display (
             for (r = 1; r < HEIGHT-1; r = r + 1) begin
                 $write("|");
                 for (c = 1; c < WIDTH-1; c = c + 1) begin
-                    if (c == 1 && r >= paddle1_y / SCALE_Y && r < (paddle1_y + PADDLE_H) / SCALE_Y)
+                    if (c == 1 && r >= paddle1_y / SCALE_Y && r < (paddle1_y + PADDLE_HEIGHT) / SCALE_Y)
                         $write("%s", PADDLE_CHAR);
-                    else if (c == WIDTH-2 && r >= paddle2_y / SCALE_Y && r < (paddle2_y + PADDLE_H) / SCALE_Y)
+                    else if (c == WIDTH-2 && r >= paddle2_y / SCALE_Y && r < (paddle2_y + PADDLE_HEIGHT) / SCALE_Y)
                         $write("%s", PADDLE_CHAR);
-                    else if (c == ball_x / SCALE_X && r == ball_y / SCALE_X)
+                    else if (c == (ball_x / SCALE_X) && r == (ball_y / SCALE_Y))
                         $write("%s", BALL_CHAR);
                     else
                         $write("%s", EMPTY);
@@ -74,4 +74,4 @@ module terminal_display (
     endtask
 endmodule
 
-// iverilog -o pong_game.vvp pong_game_tb.v pong_game.v ball_logic.v paddle_logic.v bot_ai.v pong_renderer.v vga_sync_gen.v terminal_display.v
+//iverilog -o pong_game.vvp pong_game_tb.v pong_game.v ball_logic.v paddle_logic.v bot_ai.v pong_renderer.v vga_sync_gen.v terminal_display.v

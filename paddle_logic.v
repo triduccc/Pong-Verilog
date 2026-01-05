@@ -12,7 +12,7 @@ module paddle_logic (
     // Parameters
     parameter Y_MAX = 479;          
     parameter PADDLE_HEIGHT = 40;   
-    parameter PADDLE_VELOCITY = 4;  
+    parameter PADDLE_VELOCITY = 10;  
 
     // Center
     localparam CENTER_POS = 220;
