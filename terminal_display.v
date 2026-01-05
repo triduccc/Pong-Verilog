@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module terminal_display (
     input clk,
     input rst,
@@ -10,13 +12,16 @@ module terminal_display (
 );
 
     //parameters, we reduce the screen to just 80x24
+    localparam PADDLE_H = 6;
     parameter WIDTH = 80;
     parameter HEIGHT = 24;
     parameter SCALE_X = 640 / WIDTH;
     parameter SCALE_Y = 480 / HEIGHT;
-    parameter PADDLE_WIDTH = 4;
-    parameter BALL_SIZE = 1;
     parameter UPDATE_INTERVAL = 1000;
+    localparam PADDLE_CHAR = "#";
+    localparam EMPTY = " ";
+    localparam BALL_CHAR = "o";
+    integer frame = 0;
 
     reg [31:0] update_counter = 0;
 
@@ -27,55 +32,44 @@ module terminal_display (
             update_counter <= update_counter + 1;
             if (update_counter >= UPDATE_INTERVAL) begin
                 update_counter <= 0;
-                display();
+                render();
+                frame = frame + 1;
             end
         end
     end
 
-    task display();
-        integer i, j;
-        reg [1:0] row [0:WIDTH-1];  // each row is a vector
+    task render;
+        integer r, c; // row and col
         begin
-            $display("P1 Score: %d P2 Score: %d", score_p1, score_p2);
-            $display("");
+            $write("\033[2J\033[H");  // Clear screen & move cursor home (works in most terminals)
 
-            //print each row
-            for (i = 0; i < HEIGHT; i = i + 1) begin
-                // reset each row to 0
-                for (j = 0; j < WIDTH; j = j + 1) begin
-                    row[j] = 0;
+            // Top border
+            $write("+");
+            for (c = 0; c < WIDTH-2; c = c + 1) $write("-");
+            $display("+  Score: %0d - %0d", score_p1, score_p2);
+
+            // Game field, left = 1, right = 2
+            for (r = 1; r < HEIGHT-1; r = r + 1) begin
+                $write("|");
+                for (c = 1; c < WIDTH-1; c = c + 1) begin
+                    if (c == 1 && r >= paddle1_y / SCALE_Y && r < (paddle1_y + PADDLE_H) / SCALE_Y)
+                        $write("%s", PADDLE_CHAR);
+                    else if (c == WIDTH-2 && r >= paddle2_y / SCALE_Y && r < (paddle2_y + PADDLE_H) / SCALE_Y)
+                        $write("%s", PADDLE_CHAR);
+                    else if (c == ball_x / SCALE_X && r == ball_y / SCALE_X)
+                        $write("%s", BALL_CHAR);
+                    else
+                        $write("%s", EMPTY);
                 end
-
-                // check for paddles
-                if (i >= (paddle1_y / SCALE_Y) && i < ((paddle1_y + 40) / SCALE_Y)) begin
-                    for (j = 0; j < PADDLE_WIDTH; j = j +1) begin
-                        row[j] = 1;
-                    end
-                end
-
-                if (i >= (paddle2_y / SCALE_Y) && i < ((paddle2_y + 40) / SCALE_Y)) begin
-                    for (j = 0; j < PADDLE_WIDTH; j = j +1) begin
-                        row[WIDTH-1-j] = 1;
-                    end
-                end
-
-                //check for ball
-                if (i == (ball_y / SCALE_Y) && (ball_x / SCALE_X) < WIDTH) begin
-                    row[ball_x / SCALE_X] = 2;
-                end
-
-                //print on the terminal
-                for (j = 0; j < WIDTH; j = j + 1) begin
-                    if (row[j] == 2) $write("O");
-                    else if (row[j] == 1) $write("|");
-                    else $write(".");
-                end
-                $display("");
-
+                $display("|");
             end
 
-            //move cursor up to overwrite
-            $write("\033[%dA", HEIGHT + 2);
+            // Bottom border
+            $write("+");
+            for (c = 0; c < WIDTH-2; c = c + 1) $write("-");
+            $display("+");
+
+            $display("Frame: %0d | Watching two AIs play Pong forever...", frame);
         end
     endtask
 endmodule
