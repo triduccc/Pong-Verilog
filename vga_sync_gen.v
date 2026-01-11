@@ -1,5 +1,3 @@
-
-
 module vga_sync_gen (
     input clk,
     input rst,  // active high, rst = 1 then reset

@@ -34,7 +34,7 @@ module terminal_display (
     task render;
         integer r, c; // row and col
         begin
-            $write("\033[2J\033[H");  // Clear screen & move cursor home (works in most terminals)
+            $write("\033[2J\033[H");  // Clear screen & move cursor home 
 
             // Top border
             $write("+");

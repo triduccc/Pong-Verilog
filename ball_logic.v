@@ -92,9 +92,6 @@ module ball_logic(
                 ball_dx = -1;  // Reverse direction
                 ball_dy = 1;
             end
-
-
-        end // <--- THIS 'END' CLOSES THE 'ELSE BEGIN' (Game Loop)
-    end // <--- THIS 'END' CLOSES THE 'ALWAYS' BLOCK
-
-endmodule // <--- CRITICAL: DO NOT DELETE THIS LINE
+        end 
+    end 
+endmodule 
